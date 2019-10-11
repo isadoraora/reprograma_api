@@ -19,24 +19,17 @@ exports.getById = (req, res) => {
 exports.getBooks = (req, res) => {
     const id = req.params.id
     const aluna = alunas.find(aluna => aluna.id == id)
-
     if (!aluna) {
-        res.send('Não encontrei essa garota!')
+        res.send('Aluna não encontrada!')
     }
     const livrosAluna = aluna.livros
     const livrosLidos = livrosAluna.filter(livro => livro.leu == 'true')
-    const tituloLivro = livrosAluna.map(livros => livros.titulo)
-    res.status(200).send(tituloLivro)
+    const tituloLivros = livrosAluna.map(livros => livros.titulo)
+    res.status(200).send(tituloLivros)
 }
 
 exports.getSp = (req, res) => {
-    //const nasceuSp = alunas.nasceuEmSp
-  //  const nomePaulista = nasceuSp.filter(aluna => aluna.nasceuEmSp == 'true')
-  //const paulistas = nasceuSp.map(aluna => aluna.nome)
     const nasceuSp = alunas.filter(aluna => aluna.nasceuEmSp == 'true')
     const paulistas = nasceuSp.map(aluna => aluna.nome)
-    
     res.status(200).send(paulistas)
-    
-
 }
