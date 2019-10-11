@@ -28,15 +28,35 @@ exports.getBooks = (req, res) => {
     const tituloLivro = livrosAluna.map(livros => livros.titulo)
     res.status(200).send(tituloLivro)
 }
-
 exports.getSp = (req, res) => {
-    //const nasceuSp = alunas.nasceuEmSp
-  //  const nomePaulista = nasceuSp.filter(aluna => aluna.nasceuEmSp == 'true')
-  //const paulistas = nasceuSp.map(aluna => aluna.nome)
     const nasceuSp = alunas.filter(aluna => aluna.nasceuEmSp == 'true')
     const paulistas = nasceuSp.map(aluna => aluna.nome)
-    
-    res.status(200).send(paulistas)
-    
 
+    res.status(200).send(paulistas)
+}
+function calcularIdade(anoDeNasc, mesDeNasc, diaDeNasc) {
+    const now = new Date()
+    const anoAtual = now.getFullYear()
+    const mesAtual = now.getMonth() + 1
+    const hoje = now.getDate()
+
+    let idade = anoAtual - anoDeNasc
+    if (mesAtual < mesDeNasc || (mesAtual == mesDeNasc && hoje < diaDeNasc)) {
+        idade -= 1
+    }
+    return idade
+}
+
+exports.getIdades = (req, res) => {
+    const id = req.params.id
+    const aluna = alunas.find(aluna => aluna.id == id)
+    const dataDeNasc = aluna.dateOfBirth
+    const arrDataQuebrada = dataDeNasc.split("/")
+
+    const ano = arrDataQuebrada[2]
+    const mes = arrDataQuebrada[1]
+    const dia = arrDataQuebrada[0]
+    const datinha = calcularIdade(ano, mes, dia)
+    
+    res.status(200).send({datinha})
 }
