@@ -7,7 +7,7 @@ router.get("/nasceuSp", controller.getSp)
 router.get("/:id/idades", controller.getIdades)
 router.get("/:id", controller.getById)
 router.get("/:id/books", controller.getBooks)
-
 router.post("/", controller.post)
-router.post("/:id/books", controller.post)
+router.post("/:id/books", controller.postBooks)
+
 module.exports = router

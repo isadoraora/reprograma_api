@@ -1,6 +1,7 @@
 //puxa as infos do modelo que criamos já que não possuímos BD
 const alunas = require("../model/alunas.json")
-const fs = require('fs')
+
+const fs = require('fs');
 
 exports.get = (req, res) => {
     console.log(req.url)
@@ -63,14 +64,15 @@ exports.getIdades = (req, res) => {
 }
 
 exports.post = (req, res) => {
-    const { nome, dateOfBirth, nasceuEmSp, id, livros } = req.body
-    alunas.push({ nome, dateOfBirth, nasceuEmSp, id, livros })
-
+    const { nome, dateOfBirth, nasceuEmSp, id, livros } = req.body;
+    alunas.push({ nome, dateOfBirth, nasceuEmSp, id, livros });
+    //('./src/model') => tem que ser o caminho absoluto, ou não acha.
     fs.writeFile('./src/model/alunas.json', JSON.stringify(alunas), 'utf8', function (err) {
         if (err) {
             return res.status(500).send({ message: err })
         }
-        console.log('o arquivo foi salvo!!')
+        console.log('The file was saved!')
+
     })
     return res.status(201).send(alunas)
 }
@@ -93,3 +95,4 @@ exports.postBooks = (req, res) => {
 
     res.status(201).send(alunas[aluna.id - 1].livros);
 };
+
