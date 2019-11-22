@@ -9,5 +9,6 @@ router.get("/:id", controller.getById)
 router.get("/:id/books", controller.getBooks)
 router.post("/", controller.post)
 router.post("/:id/books", controller.postBooks)
+router.delete("/:cpf", controller.deletarAluna)
 
 module.exports = router
