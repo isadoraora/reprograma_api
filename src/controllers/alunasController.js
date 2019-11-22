@@ -1,4 +1,6 @@
+//puxa as infos do modelo que criamos já que não possuímos BD
 const alunas = require("../model/alunas.json")
+
 const fs = require('fs');
 
 exports.get = (req, res) => {
@@ -70,23 +72,25 @@ exports.post = (req, res) => {
             return res.status(500).send({ message: err })
         }
         console.log('The file was saved!')
+
     })
     return res.status(201).send(alunas)
 }
 
 exports.postBooks = (req, res) => {
-    const id = req.params.id
-    const aluna = alunas.find(aluna => aluna.id == id)
+    const id = req.params.id;
+    const aluna = alunas.find(aluna => aluna.id == id);
     if (!aluna) {
-        res.send("Não encontrei essa garouta!")
+        res.send('Não encontramos esta aluna!');
     }
-    const { titulo, leu } = req.body
-    alunas[alunas.id - 1].livros.push({ titulo, leu })
+    const { titulo, leu } = req.body;
+    alunas[aluna.id - 1].livros.push({ titulo, leu });
 
-    fs.writeFile("./src/model/alunas.json", JSON.stringify(alunas), 'utf8', function (err) {
+    fs.writeFile('./src/model/alunas.json', JSON.stringify(alunas), 'utf8', function (err) {
         if (err) {
-            return res.status(500).send({ message: err })
+            return res.status(500).send({ message: err });
         }
+
         console.log("The file was saved!")
     })
     return res.status(201).send(alunas[aluna.id - 1].livros)
@@ -108,3 +112,10 @@ exports.deletarAluna = (req, res) => {
         })
     })
 }
+
+        console.log('O arquivo foi salvo com sucesso!');
+    
+
+    res.status(201).send(alunas[aluna.id - 1].livros);
+
+
